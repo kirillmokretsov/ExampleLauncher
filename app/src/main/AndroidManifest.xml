@@ -4,6 +4,8 @@
     package="io.github.kirillmokretsov.examplelauncher"
     >
 
+    <uses-permission android:name="android.permission.QUERY_ALL_PACKAGES" />
+
     <application
         android:allowBackup="true"
         android:fullBackupContent="@xml/backup_descriptor"
