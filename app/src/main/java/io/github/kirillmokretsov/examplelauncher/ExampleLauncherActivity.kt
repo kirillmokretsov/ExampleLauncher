@@ -1,8 +1,11 @@
 package io.github.kirillmokretsov.examplelauncher
 
 import android.content.Intent
+import android.content.pm.ResolveInfo
 import android.os.Bundle
 import android.util.Log
+import android.view.View
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -38,5 +41,19 @@ class ExampleLauncherActivity : AppCompatActivity() {
         }
 
         Log.i(TAG, "Found ${activities.size}")
+    }
+
+    private class ActivityHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+
+        private val nameTextView = itemView as TextView
+        private lateinit var resolveInfo: ResolveInfo
+
+        fun bindActivity(resolveInfo: ResolveInfo) {
+            this.resolveInfo = resolveInfo
+            val packageManager = itemView.context.packageManager
+            val appName = resolveInfo.loadLabel(packageManager).toString()
+            nameTextView.text =  appName
+        }
+
     }
 }
