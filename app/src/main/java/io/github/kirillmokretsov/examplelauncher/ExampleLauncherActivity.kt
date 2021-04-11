@@ -7,6 +7,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -47,20 +48,22 @@ class ExampleLauncherActivity : AppCompatActivity() {
         Log.i(TAG, "Found ${activities.size}")
     }
 
-    private class ActivityHolder(itemView: View) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
+    private class ActivityHolder(view: View) : RecyclerView.ViewHolder(view), View.OnClickListener {
 
-        private val nameTextView = itemView as TextView
+        private val root = view
+        private val titleTextView: TextView = root.findViewById(R.id.app_title)
+        private val iconView: ImageView = root.findViewById(R.id.app_icon)
         private lateinit var resolveInfo: ResolveInfo
 
         init {
-            nameTextView.setOnClickListener(this)
+            titleTextView.setOnClickListener(this)
         }
 
         fun bindActivity(resolveInfo: ResolveInfo) {
             this.resolveInfo = resolveInfo
-            val packageManager = itemView.context.packageManager
-            val appName = resolveInfo.loadLabel(packageManager).toString()
-            nameTextView.text = appName
+            val packageManager = root.context.packageManager
+            titleTextView.text = resolveInfo.loadLabel(packageManager).toString()
+            iconView.setImageDrawable(resolveInfo.loadIcon(packageManager))
         }
 
         override fun onClick(view: View) {
@@ -81,7 +84,7 @@ class ExampleLauncherActivity : AppCompatActivity() {
         RecyclerView.Adapter<ActivityHolder>() {
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ActivityHolder {
             val layoutInflater = LayoutInflater.from(parent.context)
-            val view = layoutInflater.inflate(android.R.layout.simple_list_item_1, parent, false)
+            val view = layoutInflater.inflate(R.layout.item_application, parent, false)
             return ActivityHolder(view)
         }
 
