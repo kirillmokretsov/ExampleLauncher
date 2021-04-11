@@ -42,6 +42,8 @@ class ExampleLauncherActivity : AppCompatActivity() {
             )
         }
 
+        recyclerView.adapter = ActivityAdapter(activities)
+
         Log.i(TAG, "Found ${activities.size}")
     }
 
