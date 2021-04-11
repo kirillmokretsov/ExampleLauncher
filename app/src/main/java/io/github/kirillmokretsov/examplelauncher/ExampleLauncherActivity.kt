@@ -1,9 +1,9 @@
 package io.github.kirillmokretsov.examplelauncher
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
@@ -30,6 +30,12 @@ class ExampleLauncherActivity : AppCompatActivity() {
         }
 
         val activities = packageManager.queryIntentActivities(startupIntent, 0)
+        activities.sortWith { a, b ->
+            String.CASE_INSENSITIVE_ORDER.compare(
+                a.loadLabel(packageManager).toString(),
+                b.loadLabel(packageManager).toString()
+            )
+        }
 
         Log.i(TAG, "Found ${activities.size}")
     }
